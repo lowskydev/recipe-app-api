@@ -1,0 +1,19 @@
+services:
+  # name of the service
+  app:
+    # build the image from the Dockerfile in the current directory
+    build:
+      context: .
+      args:
+        - DEV=true
+    # 8000 from our machine to 8000 in the container
+    ports: 
+      - "8000:8000"
+    # mapping our app directory to app dir in the container
+    # we do that so if we change something in the code it will
+    # also change in the container while it's running (without rebuilding the image)
+    volumes:
+      - ./app:/app
+    # run the command to start the server
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
